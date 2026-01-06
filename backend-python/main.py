@@ -27,19 +27,7 @@ app.add_middleware(
 # Crear directorios
 OUTPUT_DIR = Path("output")
 OUTPUT_DIR.mkdir(exist_ok=True)
-
-# CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Crear directorios
-OUTPUT_DIR = Path("output")
-OUTPUT_DIR.mkdir(exist_ok=True)
+BASE_URL = os.getenv("BACKEND_PYTHON_URL", "http://localhost:8000")
 
 class NarrationRequest(BaseModel):
     story: str
@@ -74,8 +62,8 @@ async def generate_narration(request: NarrationRequest, background_tasks: Backgr
             "narration_id": narration_id,
             "status": "processing",
             "message": "Narración en proceso. Voz generada con TTS real (pyttsx3/gTTS), animación facial simulada.",
-            "audio_url": f"/output/{audio_path.name}",
-            "video_url": f"/output/{video_path.name}"
+            "audio_url": f"{BASE_URL}/output/{audio_path.name}",
+            "video_url": f"{BASE_URL}/output/{video_path.name}"
         }
 
     except Exception as e:
@@ -85,7 +73,7 @@ async def generate_narration(request: NarrationRequest, background_tasks: Backgr
 async def generate_voice_endpoint(request: VoiceRequest):
     try:
         audio_path = await generate_voice_mock(request.text, str(uuid.uuid4()))
-        return {"audio_url": f"/output/{audio_path.name}"}
+        return {"audio_url": f"{BASE_URL}/output/{audio_path.name}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

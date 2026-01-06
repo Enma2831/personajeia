@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 # URLs de los servicios
-NODE_BACKEND = "http://localhost:3002"
+NODE_BACKEND = "http://localhost:3001"
 PYTHON_BACKEND = "http://localhost:8000"
 
 def test_character_generation():
@@ -119,7 +119,7 @@ def main():
 
     if not services_ok:
         print("\n❌ Servicios no disponibles. Asegúrate de que estén corriendo:")
-        print("   - Backend Node.js en puerto 3002")
+        print("   - Backend Node.js en puerto 3001")
         print("   - Backend Python en puerto 8000")
         return
 

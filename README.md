@@ -68,6 +68,14 @@ cd frontend && npm start
 2. **Dependencias**: Las básicas están instaladas
 3. **Acceso**: Frontend en `http://localhost:3000`
 
+### Checklist para quien si tiene API key (video real)
+- Copia `.env.example` a `.env`, asigna `GOOGLE_API_KEY` (AI Studio) y, si tienes Imagen 3 habilitado, define `GOOGLE_IMAGE_MODEL=imagen-3.0-generate`.
+- Arranca servicios con `start.bat` (Windows) o manualmente: Node 3001, Python 8000, Frontend 3000.
+- Genera el personaje en el frontend; el backend Node usa `@google/genai` `generateImages` y guarda el PNG en `backend-node/images`.
+- Genera la historia; el backend Python crea el TTS real y arma el video con FFmpeg si esta instalado (si no, produce GIF/placeholder).
+- Si el modelo bloquea la imagen (mensaje RAI), prueba un prompt mas neutral o verifica que tu cuenta tenga acceso a Imagen 3.
+
+
 ## 🧪 Testing la Funcionalidad Actual
 
 ### Test de TTS
@@ -79,7 +87,7 @@ Esto genera un archivo de audio con voz en español.
 
 ### Verificar Servicios
 - **Frontend**: http://localhost:3000
-- **Backend Node.js**: http://localhost:3002 (Gemini images)
+- **Backend Node.js**: http://localhost:3001 (Gemini images)
 - **Backend Python**: http://localhost:8000 (TTS y animación)
 
 ### Flujo de Test Completo
